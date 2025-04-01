@@ -1,6 +1,9 @@
+// [drylint]: 以下是核心 API 的导出
 // Core API ------------------------------------------------------------------
 
+// [drylint]: 构建时读取根目录的 package.json 文件中的 version 值写入
 export const version: string = __VERSION__
+// [drylint]: 导出 @vue/reactivity 包中提供的响应式 API
 export {
   // core
   reactive,
@@ -37,13 +40,16 @@ export {
   getCurrentScope,
   onScopeDispose,
 } from '@vue/reactivity'
+// [drylint]: 导出 computed 相关的 API
 export { computed } from './apiComputed'
+// [drylint]: 导出 watch 相关的 API
 export {
   watch,
   watchEffect,
   watchPostEffect,
   watchSyncEffect,
 } from './apiWatch'
+// [drylint]: 导出生命周期相关的 API
 export {
   onBeforeMount,
   onMounted,
@@ -58,14 +64,23 @@ export {
   onErrorCaptured,
   onServerPrefetch,
 } from './apiLifecycle'
+// [drylint]: 导出注入相关的 API
 export { provide, inject, hasInjectionContext } from './apiInject'
+// [drylint]: 导出调度相关的 API
 export { nextTick } from './scheduler'
+// [drylint]: 导出定义组件的 API
 export { defineComponent } from './apiDefineComponent'
+// [drylint]: 导出定义异步组件的 API
 export { defineAsyncComponent } from './apiAsyncComponent'
+// [drylint]: 导出 setup 辅助函数
 export { useAttrs, useSlots } from './apiSetupHelpers'
+// [drylint]: 导出辅助函数 useModel
 export { useModel } from './helpers/useModel'
+// [drylint]: 导出辅助函数 useTemplateRef 及类型
 export { useTemplateRef, type TemplateRef } from './helpers/useTemplateRef'
+// [drylint]: 导出辅助函数 useId
 export { useId } from './helpers/useId'
+// [drylint]: 导出服务端渲染水合相关的 API
 export {
   hydrateOnIdle,
   hydrateOnVisible,
@@ -73,6 +88,7 @@ export {
   hydrateOnInteraction,
 } from './hydrationStrategies'
 
+// [drylint]: 以下是使用 <script setup> 时相关 API 的导出
 // <script setup> API ----------------------------------------------------------
 
 export {
@@ -99,6 +115,7 @@ export {
   withAsyncContext,
 } from './apiSetupHelpers'
 
+// [drylint]: 以下是高级 API 的导出
 // Advanced API ----------------------------------------------------------------
 
 // For getting a hold of the internal instance in setup() - useful for advanced
@@ -125,6 +142,7 @@ export { withDirectives } from './directives'
 // SSR context
 export { useSSRContext, ssrContextKey } from './helpers/useSsrContext'
 
+// [drylint]: 以下是自定义渲染相关 API 的导出
 // Custom Renderer API ---------------------------------------------------------
 
 export { createRenderer, createHydrationRenderer } from './renderer'
@@ -178,6 +196,7 @@ export const setDevtoolsHook = (
   __DEV__ || __ESM_BUNDLER__ ? _setDevtoolsHook : NOOP
 ) as typeof _setDevtoolsHook
 
+// [drylint]: 以下是 TypeScript 类型相关的内容导出
 // Types -----------------------------------------------------------------------
 
 import type { VNode } from './vnode'
@@ -344,8 +363,10 @@ export type {
 } from './hydrationStrategies'
 export type { HMRRuntime } from './hmr'
 
+// [drylint]: 以下是内部使用的 API 的导出
 // Internal API ----------------------------------------------------------------
 
+// [drylint]: 重要提示：内部 API 可能在版本更新时，在不通知用户的情况下发生变化，用户应尽量避免使用。
 // **IMPORTANT** Internal APIs may change without notice between versions and
 // user code should avoid relying on them.
 
@@ -386,8 +407,10 @@ export {
 // For test-utils
 export { transformVNodeArgs } from './vnode'
 
+// [drylint]: 以下是服务端渲染 (SSR) 相关的导出
 // SSR -------------------------------------------------------------------------
 
+// [drylint]: 重要提示：这些 API 仅为暴露给 @vue/server-renderer 包使用，可能在不通知用户的情况下发生变化，用户应尽量避免使用。
 // **IMPORTANT** These APIs are exposed solely for @vue/server-renderer and may
 // change without notice between versions. User code should never rely on them.
 
@@ -432,6 +455,7 @@ const _ssrUtils: {
  */
 export const ssrUtils = (__SSR__ ? _ssrUtils : null) as typeof _ssrUtils
 
+// [drylint]: 以下是为兼容 vue 2.x 的导出
 // 2.x COMPAT ------------------------------------------------------------------
 
 import { DeprecationTypes as _DeprecationTypes } from './compat/compatConfig'
