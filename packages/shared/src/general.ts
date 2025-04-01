@@ -31,9 +31,14 @@ export const remove = <T>(arr: T[], el: T): void => {
 }
 
 const hasOwnProperty = Object.prototype.hasOwnProperty
+// [drylint]: 通过调用 Object.prototype.hasOwnProperty 判断一个对象是否是自身拥有某个属性
 export const hasOwn = (
+  // [drylint]: 要判断的对象
   val: object,
+  // [drylint]: 要判断的属性
   key: string | symbol,
+  // [drylint]: 函数调用 Object.prototype.hasOwnProperty 进行判断
+  // [drylint]: 返回值  key is keyof typeof val 用于 TypeScript 类型收窄，当判断返回值 true 时，TypeScript 则认为这个属性一定存在于这个对象中
 ): key is keyof typeof val => hasOwnProperty.call(val, key)
 
 export const isArray: typeof Array.isArray = Array.isArray
@@ -66,6 +71,7 @@ export const objectToString: typeof Object.prototype.toString =
 export const toTypeString = (value: unknown): string =>
   objectToString.call(value)
 
+// [drylint]: 获取一个值的原始类型，返回 [object RawType] 的 RawType 部分，比如 Array, String, Object, ...
 export const toRawType = (value: unknown): string => {
   // extract "RawType" from strings like "[object RawType]"
   return toTypeString(value).slice(8, -1)
@@ -149,16 +155,26 @@ export const invokeArrayFns = (fns: Function[], ...arg: any[]): void => {
   }
 }
 
+// [drylint]: 使用 Object.defineProperty 定义一个对象的属性值，这个值将设置为不可遍历
 export const def = (
+  // [drylint]: 要操作的对象
   obj: object,
+  // [drylint]: 要操作的对象属性
   key: string | symbol,
+  // [drylint]: 要设置的属性值
   value: any,
+  // [drylint]: 是否允许对该属性写入修改，默认不允许
   writable = false,
 ): void => {
+  // [drylint]: 使用 Object.defineProperty 定义对象的属性值
   Object.defineProperty(obj, key, {
+    // [drylint]: configurable 表示该属性是否可被删除，描述符是否可被修改
     configurable: true,
+    // [drylint]: enumerable 表示是否允许遍历该属性
     enumerable: false,
+    // [drylint]: writable 表示该属性值是否可被修改
     writable,
+    // [drylint]: value 表示要设置的值
     value,
   })
 }
